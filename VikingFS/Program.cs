@@ -48,8 +48,8 @@ namespace VikingFS
         static void TestFileMiddleware()
         {
             var fm = new fileMiddleware(@"C:\Users\Utilisateur\Desktop\middleware.txt");
-            fm.AddNewData("TechnoViking.dat", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
-            fm.AddNewData("Ropt.banane", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
+            fm.addNewFile("TechnoViking.dat", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
+            fm.addNewFile("Ropt.banane", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
             Console.WriteLine(fm.getPath("TechnoViking.dat"));
             Console.ReadKey();
         }
