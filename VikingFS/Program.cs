@@ -45,8 +45,18 @@ namespace VikingFS
             return lst;
         }
 
+        static void TestFileMiddleware()
+        {
+            var fm = new fileMiddleware(@"C:\Users\Utilisateur\Desktop\middleware.txt");
+            fm.AddNewData("TechnoViking.dat", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
+            fm.AddNewData("Ropt.banane", @"C:\Users\Utilisateur\Desktop\Technoviking.dat");
+            Console.WriteLine(fm.getPath("TechnoViking.dat"));
+            Console.ReadKey();
+        }
+
         static void Main(string[] args)
         {
+            TestFileMiddleware();
            // Tests();
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
             string middlewareFile = @"C:\middleware.txt";
