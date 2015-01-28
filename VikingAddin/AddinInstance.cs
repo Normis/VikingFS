@@ -44,7 +44,11 @@ namespace EmptyAddin
                 pushItem.Visible = true;
                 pushItem.Enabled = false;
 
-                var ifs = new VikingFS.IncrementalFileSystem("asd", "asd");
+                var AboutVikingFS = subMenu.AddItem("About VikingFS", false);
+                AboutVikingFS.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(AboutVFS);
+                AboutVikingFS.Visible = true;
+                AboutVikingFS.Enabled = true;
+                //var ifs = new VikingFS.IncrementalFileSystem("asd", "asd");
             }
         }
 
@@ -71,6 +75,13 @@ namespace EmptyAddin
         private void Branch()
         {
 
+        }
+
+        private void AboutVFS()
+        {
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString("About VikingFS", ""+
+            "");
         }
     }
 }
