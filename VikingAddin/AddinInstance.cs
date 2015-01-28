@@ -24,30 +24,58 @@ namespace EmptyAddin
         { 
             //some class initizalition code
         }
-
+        string fileName;
         private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
         {
+            /**/
+            FEvents = (IAppClientFileEventsService)_appInstance;
+            
+
+            FEvents.AfterClientFileSave = new TxpAddinLibrary.Handlers.ClientFile.AfterSaveHandler(
+               (aFilename) =>
+               {
+                   fileName = aFilename;
+                   DoCommit();
+               });
+            /**/
             var appMenuService = (IAppMenuService)_appInstance;
             if (appMenuService != null)
             {
                 var subMenu = appMenuService.AddRootMenu("Empty add-in");
                 subMenu.Visible = true;
                 
-                var commitItem = subMenu.AddItem("Commit", false);
-                commitItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoCommit);
-                commitItem.Visible = true;
-                commitItem.Enabled = true;
 
-                pushItem = subMenu.AddItem("Push", false);
+                var pushItem = subMenu.AddItem("Push", false);
                 pushItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoPush);
                 pushItem.Visible = true;
                 pushItem.Enabled = false;
+
+                var updateItem = subMenu.AddItem("Update", false);
+                updateItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Update);
+                updateItem.Visible = true;
+                updateItem.Enabled = true;
+
+                var checkoutItem = subMenu.AddItem("Checkout", false);
+                checkoutItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Checkout);
+                checkoutItem.Visible = true;
+                checkoutItem.Enabled = true;
+
+                var branchItem = subMenu.AddItem("Branch", false);
+                branchItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Branch);
+                branchItem.Visible = true;
+                branchItem.Enabled = true;
+
+                var aboutItem = subMenu.AddItem("About us", false);
+                aboutItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(aboutUs);
+                aboutItem.Visible = true;
+                aboutItem.Enabled = true;
             }
         }
 
         private void DoCommit()
         {
+            string test = this.fileName;
             pushItem.Enabled = true;
         }
 
@@ -70,5 +98,15 @@ namespace EmptyAddin
         {
 
         }
+
+        private void aboutUs() 
+        {
+            /*Make ascii Viking and push it to Popup window*/
+            string asciiViking = "";
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString("Viking!", asciiViking);
+        }
+
+        public IAppClientFileEventsService FEvents { get; set; }
     }
 }
