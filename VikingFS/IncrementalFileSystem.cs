@@ -10,7 +10,7 @@ namespace VikingFS
     {
         private string folderPath;
         private string fileName;
-        private static const string extension = ".incb";
+        private const string extension = ".incb";
         private StringBuilder modifs;//Could/should be change with file access
         public IncrementalFileSystem(string _folderPath, string _fileName)
         {
@@ -38,7 +38,7 @@ namespace VikingFS
 
         public void Push()
         {
-            long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last());
+            long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last().Split(new string[]{ "<-" }, StringSplitOptions.RemoveEmptyEntries)[0]);
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(GetFile(), true))
             {
                 file.Write(modifs.ToString());
@@ -47,12 +47,12 @@ namespace VikingFS
             }
         }
 
-        private Dictionary<string, string> GetValues(long revision = -1 )
+        public Dictionary<string, string> GetValues(long revision = -1 )
         {
             using (System.IO.StreamReader file = new System.IO.StreamReader(GetFile()))
             {
                 string first = file.ReadLine();//did not check if empty, I should have
-                string[] s = first.Split(new string[] { "0<-" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] s = first.Split(new string[] { "<-" }, StringSplitOptions.RemoveEmptyEntries);
                 Dictionary<string, string> dict = (s.Length > 1)
                             ? (new IncrementalFileSystem(folderPath, s[1])).GetValues(Convert.ToInt64(s[2]))
                             : new Dictionary<string, string>();
@@ -66,7 +66,7 @@ namespace VikingFS
                     try 
                     {
                         long v = Convert.ToInt64(line);
-                        if (v > 0 && v > revision)
+                        if (revision > 0 && v > revision)
                             break;
                     }
                     catch (Exception e)
@@ -98,7 +98,7 @@ namespace VikingFS
         public IncrementalFileSystem Branch(string branchName)
         {
             //Replace with something else later, ain't nobody got time for that!
-            System.Diagnostics.Debug.Assert(!System.IO.File.Exists(GetFile()));
+            //System.Diagnostics.Debug.Assert(!System.IO.File.Exists(folderPath + "\\" + branchName + extension));
             long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last());//can't branch at 0, anyway, what kind of dumbass would do that?
 
             System.IO.File.WriteAllLines(folderPath + "\\" + branchName + extension, new string[] { "0<-" + fileName + "<-" + lastLine });
