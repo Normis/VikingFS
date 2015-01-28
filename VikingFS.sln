@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VikingFS", "VikingFS\VikingFS.csproj", "{F2509148-42A8-4A79-835F-A342C6069B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VikingAddin", "VikingAddin\VikingAddin.csproj", "{A415C9E9-7199-42F7-941D-BBA0917066F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyAddin", "VikingAddin\EmptyAddin.csproj", "{A415C9E9-7199-42F7-941D-BBA0917066F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
