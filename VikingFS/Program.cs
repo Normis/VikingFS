@@ -55,13 +55,15 @@ namespace VikingFS
             }
             Console.ReadKey();
             //taxreturn.Open()
-            /*Console.Write("Enter the middleware's location : ");
-            string middlewareFile = Console.ReadLine();
+            /*
+            // Get the middleware location (ATM Hardcoded)          
+            string middlewareFile = @"C:\middleware.txt";
+            // Get data position (Probably sent by add-in when saving, ATM from console)
             Console.Write("Enter the data location : ");
             string dataFile = Console.ReadLine();
-            var middleware = new fileMiddleware(middlewareFile);
+            fileMiddleware middleware = new fileMiddleware(middlewareFile);
             middleware.addNewData(middlewareFile);
-            middleware.commit();*/
+            middleware.push();*/
         }
     }
 }
