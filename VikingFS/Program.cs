@@ -49,17 +49,36 @@ namespace VikingFS
         {
             Tests();
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
-            
-            if(!taxreturn.Open(@"C:\Users\Utilisateur\Desktop\bbb.214"))
-                Console.Write("Yo bitch, something went wrong!");
-
-            var dict = ModifiedList(taxreturn);
-            foreach(var v in dict)
+            string middlewareFile = @"C:\middleware.txt";
+            fileMiddleware middleware = new fileMiddleware(middlewareFile);
+            string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
+            /*Remove the next line once plugin works*/
+            middleware.addNewData(dataFile); middleware.push();
+            if(middleware.dataExists(dataFile))
             {
-                Console.WriteLine(v.Key + " " + v.Value);
+                if(!taxreturn.Open(dataFile))
+                    Console.Write("Yo bitch, something went wrong!");
+
+                var dict = ModifiedList(taxreturn);
+                foreach(var v in dict)
+                {
+                    Console.WriteLine(v.Key + " " + v.Value);
+                }
+                Console.ReadKey();
             }
-            Console.ReadKey();
+            else
+            {
+                Console.WriteLine("Data doesn't exists");
+            }
             //taxreturn.Open()
+            /*      
+            string middlewareFile = @"C:\middleware.txt";
+            Console.Write("Enter the data location : ");
+            string dataFile = Console.ReadLine();
+            fileMiddleware middleware = new fileMiddleware(middlewareFile);
+            middleware.addNewData(middlewareFile);
+            middleware.push();
+             */
         }
     }
 }
