@@ -24,36 +24,75 @@ namespace EmptyAddin
         { 
             //some class initizalition code
         }
-
+        string fileName;
+        string filePath;
+        //FieldComparer aComparer;
+        Boolean ComparerInit = false;
         private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
         {
+            /**/
+            FEvents = (IAppClientFileEventsService)_appInstance;
+            /**/
             var appMenuService = (IAppMenuService)_appInstance;
             if (appMenuService != null)
             {
-                var subMenu = appMenuService.AddRootMenu("Empty add-in");
+                var subMenu = appMenuService.AddRootMenu("VikingFS");
                 subMenu.Visible = true;
-                
-                var commitItem = subMenu.AddItem("Commit", false);
-                commitItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoCommit);
-                commitItem.Visible = true;
-                commitItem.Enabled = true;
 
-                pushItem = subMenu.AddItem("Push", false);
+
+                var pushItem = subMenu.AddItem("Push", false);
                 pushItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoPush);
                 pushItem.Visible = true;
-                pushItem.Enabled = false;
+                pushItem.Enabled = true;
+
+                var updateItem = subMenu.AddItem("Update", false);
+                updateItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Update);
+                updateItem.Visible = true;
+                updateItem.Enabled = true;
+
+                var checkoutItem = subMenu.AddItem("Checkout", false);
+                checkoutItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Checkout);
+                checkoutItem.Visible = true;
+                checkoutItem.Enabled = true;
+
+                var branchItem = subMenu.AddItem("Branch", false);
+                branchItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Branch);
+                branchItem.Visible = true;
+                branchItem.Enabled = true;
+
+                var aboutItem = subMenu.AddItem("About VikingFS", false);
+                aboutItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(aboutUs);
+                aboutItem.Visible = true;
+                aboutItem.Enabled = true;
             }
+            FEvents.AfterClientFileSave = new TxpAddinLibrary.Handlers.ClientFile.AfterSaveHandler(
+               (aFilename) =>
+               {
+                   fileName = aFilename;
+                   int id = fileName.LastIndexOf(@"\");
+                   filePath = fileName.Substring(0,id+1);
+                   fileName = fileName.Substring(id + 1);
+                   initComparer();
+                   DoCommit();
+               });
+           
+            
         }
 
         private void DoCommit()
         {
-            pushItem.Enabled = true;
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString(this.filePath, this.fileName);
         }
 
         private void DoPush()
         {
-            pushItem.Enabled = false;
+            if (this.filePath != "")
+            {
+                /*We can push*/
+                //aComparer.push(/*Data*/);
+            }
         }
 
         private void Update()
@@ -68,7 +107,40 @@ namespace EmptyAddin
 
         private void Branch()
         {
-
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString("Which Branch?", "Branch Name");
         }
+
+        private void aboutUs() 
+        {
+            /*Make ascii Viking and push it to Popup window*/
+            string asciiViking =
+@"                   ~.
+            Ya...___|__..ab.     .   .
+             Y88b  \88b  \88b   (     )
+              Y88b  :88b  :88b   `.oo'
+              :888  |888  |888  ( (`-'
+     .---.    d88P  ;88P  ;88P   `.`.
+    / .-._)  d8P-'''|''''-Y8P      `.`.
+   ( (`._) .-.  .-. |.-.  .-.  .-.   ) )
+    \ `---( O )( O )( O )( O )( O )-' /
+     `.    `-'  `-'  `-'  `-'  `-'  .'
+       `---------------------------'";
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString("About Viking!", asciiViking);
+        }
+
+        private void initComparer() 
+        {
+            if (!ComparerInit) 
+            {
+                //aComparer = new VikingFS.FieldComparer(comFilePath, middlewareFilePath, this.filePath, this.fileName);
+                ComparerInit = true;
+            }
+            
+        }
+
+        
+        public IAppClientFileEventsService FEvents { get; set; }
     }
 }
