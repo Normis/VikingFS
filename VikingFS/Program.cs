@@ -10,7 +10,7 @@ namespace VikingFS
     {
         public static void Tests()
         {
-            var fs = new IncrementalFileSystem(@"C:\Users\Utilisateur\prog\test\", "banane");
+           /* var fs = new IncrementalFileSystem(@"C:\Users\Utilisateur\prog\test\", "banane");
             fs.Commit("IDENT.Ident4", "Banane");
             fs.Commit("IDENT.Ident400", "135");
             fs.Push();
@@ -28,7 +28,7 @@ namespace VikingFS
             foreach(var banane in dict)
                 Console.WriteLine(banane.Key + " " + banane.Value);
 
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
 
         static Dictionary<string, string> ModifiedList(TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn)
@@ -39,9 +39,10 @@ namespace VikingFS
             {
                 var cell = taxreturn.GetCell(v);
                 if (cell.HasInput)
+                {
                     lst[v] = cell.Value.ToString();
+                }
             }
-
             return lst;
         }
 
@@ -56,22 +57,21 @@ namespace VikingFS
 
         static void Main(string[] args)
         {
-            TestFileMiddleware();
+            //TestFileMiddleware();
            // Tests();
-            TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
-            string middlewareFile = @"C:\middleware.txt";
-            fileMiddleware middleware = new fileMiddleware(middlewareFile);
+            //string middlewareFile = @"C:\middleware.txt";
+            //fileMiddleware middleware = new fileMiddleware(middlewareFile);
             string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
-            
-                if(!taxreturn.Open(dataFile))
-                    Console.Write("Yo bitch, something went wrong!");
 
-                var dict = ModifiedList(taxreturn);
-                foreach(var v in dict)
-                {
-                    Console.WriteLine(v.Key + " " + v.Value);
-                }
-                Console.ReadKey();
+            if (!taxreturn.Open(dataFile))
+                Console.Write("Yo bitch, something went wrong!");
+
+            var dict = ModifiedList(taxreturn);
+            foreach(var v in dict)
+            {
+                Console.WriteLine(v.Key + " " + v.Value);
+            }
+            Console.ReadKey();
             
             
             //taxreturn.Open()

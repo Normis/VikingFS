@@ -26,37 +26,25 @@ namespace EmptyAddin
         }
         string fileName;
         string filePath;
-        FieldComparer aComparer;
+        //FieldComparer aComparer;
         Boolean ComparerInit = false;
         private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
         {
             /**/
             FEvents = (IAppClientFileEventsService)_appInstance;
-            
-
-            FEvents.AfterClientFileSave = new TxpAddinLibrary.Handlers.ClientFile.AfterSaveHandler(
-               (aFilename) =>
-               {
-                   fileName = aFilename;
-                   int id = fileName.LastIndexOf(@"\");
-                   filePath = fileName.Substring(0,id+1);
-                   fileName = fileName.Substring(id + 1);
-                   initComparer();
-                   DoCommit();
-               });
             /**/
             var appMenuService = (IAppMenuService)_appInstance;
             if (appMenuService != null)
             {
                 var subMenu = appMenuService.AddRootMenu("VikingFS");
                 subMenu.Visible = true;
-                
+
 
                 var pushItem = subMenu.AddItem("Push", false);
                 pushItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoPush);
                 pushItem.Visible = true;
-                pushItem.Enabled = false;
+                pushItem.Enabled = true;
 
                 var updateItem = subMenu.AddItem("Update", false);
                 updateItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(Update);
@@ -78,18 +66,33 @@ namespace EmptyAddin
                 aboutItem.Visible = true;
                 aboutItem.Enabled = true;
             }
+            FEvents.AfterClientFileSave = new TxpAddinLibrary.Handlers.ClientFile.AfterSaveHandler(
+               (aFilename) =>
+               {
+                   fileName = aFilename;
+                   int id = fileName.LastIndexOf(@"\");
+                   filePath = fileName.Substring(0,id+1);
+                   fileName = fileName.Substring(id + 1);
+                   initComparer();
+                   DoCommit();
+               });
+           
+            
         }
 
         private void DoCommit()
         {
             var app = (IAppTaxApplicationService)_appInstance;
             app.ShowMessageString(this.filePath, this.fileName);
-            pushItem.Enabled = true;
         }
 
         private void DoPush()
         {
-            pushItem.Enabled = false;
+            if (this.filePath != "")
+            {
+                /*We can push*/
+                //aComparer.push(/*Data*/);
+            }
         }
 
         private void Update()
@@ -104,7 +107,8 @@ namespace EmptyAddin
 
         private void Branch()
         {
-            
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString("Which Branch?", "Branch Name");
         }
 
         private void aboutUs() 
@@ -135,6 +139,8 @@ namespace EmptyAddin
             }
             
         }
+
+        
         public IAppClientFileEventsService FEvents { get; set; }
     }
 }

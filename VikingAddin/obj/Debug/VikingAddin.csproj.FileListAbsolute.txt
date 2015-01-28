@@ -8,3 +8,7 @@ C:\Users\admin\Source\Repos\VickingFS\VikingAddin\bin\Debug\EmptyAddin.dll
 C:\Users\admin\Source\Repos\VickingFS\VikingAddin\bin\Debug\EmptyAddin.pdb
 C:\Users\admin\Source\Repos\VickingFS\VikingAddin\obj\Debug\EmptyAddin.dll
 C:\Users\admin\Source\Repos\VickingFS\VikingAddin\obj\Debug\EmptyAddin.pdb
+C:\Users\Utilisateur\prog\VickingFS\VikingAddin\bin\Debug\EmptyAddin.dll
+C:\Users\Utilisateur\prog\VickingFS\VikingAddin\bin\Debug\EmptyAddin.pdb
+C:\Users\Utilisateur\prog\VickingFS\VikingAddin\obj\Debug\EmptyAddin.dll
+C:\Users\Utilisateur\prog\VickingFS\VikingAddin\obj\Debug\EmptyAddin.pdb
