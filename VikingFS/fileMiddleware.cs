@@ -48,7 +48,7 @@ namespace VikingFS
             return dict[id];
         }
 
-        public void AddNewData(string id, string fullPath) 
+        public void addNewFile(string id, string fullPath) 
         {
             var dict = deserializeData();
             dict[id] = fullPath;
