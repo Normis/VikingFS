@@ -49,7 +49,7 @@ namespace EmptyAddin
             var appMenuService = (IAppMenuService)_appInstance;
             if (appMenuService != null)
             {
-                var subMenu = appMenuService.AddRootMenu("Empty add-in");
+                var subMenu = appMenuService.AddRootMenu("VikingFS");
                 subMenu.Visible = true;
                 
 
@@ -73,7 +73,7 @@ namespace EmptyAddin
                 branchItem.Visible = true;
                 branchItem.Enabled = true;
 
-                var aboutItem = subMenu.AddItem("About us", false);
+                var aboutItem = subMenu.AddItem("About VikingFS", false);
                 aboutItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(aboutUs);
                 aboutItem.Visible = true;
                 aboutItem.Enabled = true;
@@ -110,9 +110,20 @@ namespace EmptyAddin
         private void aboutUs() 
         {
             /*Make ascii Viking and push it to Popup window*/
-            string asciiViking = "";
+            string asciiViking =
+@"                   ~.
+            Ya...___|__..ab.     .   .
+             Y88b  \88b  \88b   (     )
+              Y88b  :88b  :88b   `.oo'
+              :888  |888  |888  ( (`-'
+     .---.    d88P  ;88P  ;88P   `.`.
+    / .-._)  d8P-'''|''''-Y8P      `.`.
+   ( (`._) .-.  .-. |.-.  .-.  .-.   ) )
+    \ `---( O )( O )( O )( O )( O )-' /
+     `.    `-'  `-'  `-'  `-'  `-'  .'
+       `---------------------------'";
             var app = (IAppTaxApplicationService)_appInstance;
-            app.ShowMessageString("Viking!", asciiViking);
+            app.ShowMessageString("About Viking!", asciiViking);
         }
 
         private void initComparer() 
