@@ -1,0 +1,5 @@
+D:\Work\VickingFS\VikingAddin\bin\Debug\EmptyAddin.dll
+D:\Work\VickingFS\VikingAddin\bin\Debug\EmptyAddin.pdb
+D:\Work\VickingFS\VikingAddin\obj\Debug\EmptyAddin.dll
+D:\Work\VickingFS\VikingAddin\obj\Debug\EmptyAddin.pdb
+D:\Work\VickingFS\VikingAddin\obj\Debug\VikingAddin.csprojResolveAssemblyReference.cache

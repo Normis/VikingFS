@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FieldList.cs" />
-    <Compile Include="fileMiddleware.cs" />
     <Compile Include="IncrementalFileSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
