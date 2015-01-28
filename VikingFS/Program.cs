@@ -47,6 +47,8 @@ namespace VikingFS
             string middlewareFile = @"C:\middleware.txt";
             fileMiddleware middleware = new fileMiddleware(middlewareFile);
             string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
+            /*Remove the next line once plugin works*/
+            middleware.addNewData(dataFile); middleware.push();
             if(middleware.dataExists(dataFile))
             {
                 if(!taxreturn.Open(dataFile))
