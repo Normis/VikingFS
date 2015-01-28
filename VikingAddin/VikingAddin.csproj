@@ -78,8 +78,6 @@
   <PropertyGroup>
     <PostBuildEvent>cmd /c copy /y "$(ProjectDir)api\ProxyAddin\1.0.0.0\*.*" "$(TargetDir)"
 
-"$(ProjectDir)api\AddinReg.exe" "T1 Taxprep 2014" -register -p $(ProjectName) "Empty hello world add-in example via ProxyAddin" "26A2ECE8-ED75-47B9-8797-32B3C0D227A8" "1.0.0.0" "$(TargetPath)" "$(TargetDir)VSProxy.dll" 
-
 "$(ProjectDir)api\AddinReg.exe" "T2 Taxprep 2014-2" -register -p "$(ProjectName)" "Empty hello world add-in example via ProxyAddin" "26A2ECE8-ED75-47B9-8797-32B3C0D227A8" "1.0.0.0" "$(TargetPath)" "$(TargetDir)VSProxy.dll"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="../packages/UnmanagedExports.1.2.6/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.6/tools/RGiesecke.DllExport.targets')" />
