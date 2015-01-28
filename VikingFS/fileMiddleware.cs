@@ -18,7 +18,7 @@ namespace VikingFS
             newFile = new StringBuilder();
         }
 
-        public void addNewData(string data) 
+        public Boolean dataExists(string data)
         {
             /*Lookup if the data already exists*/
             Boolean dataExists = false;
@@ -30,8 +30,12 @@ namespace VikingFS
                     break;
                 }
             }
-            /*If data doesn't exist, make it ready for next commit*/
-            if(!dataExists)this.newFile.Append(data+"\n");
+            return dataExists;
+        }
+
+        public void addNewData(string data) 
+        {
+            if(!dataExists(data))this.newFile.Append(data+"\n");
         }
 
         public void push()

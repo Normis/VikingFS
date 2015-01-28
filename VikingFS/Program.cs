@@ -44,26 +44,34 @@ namespace VikingFS
         {
             //Tests();
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
-            
-            if(!taxreturn.Open(@"C:\Users\Utilisateur\Desktop\bbb.214"))
-                Console.Write("Yo bitch, something went wrong!");
-
-            var dict = ModifiedList(taxreturn);
-            foreach(var v in dict)
-            {
-                Console.WriteLine(v.Key + " " + v.Value);
-            }
-            Console.ReadKey();
-            //taxreturn.Open()
-            /*
-            // Get the middleware location (ATM Hardcoded)          
             string middlewareFile = @"C:\middleware.txt";
-            // Get data position (Probably sent by add-in when saving, ATM from console)
+            fileMiddleware middleware = new fileMiddleware(middlewareFile);
+            string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
+            if(middleware.dataExists(dataFile))
+            {
+                if(!taxreturn.Open(dataFile))
+                    Console.Write("Yo bitch, something went wrong!");
+
+                var dict = ModifiedList(taxreturn);
+                foreach(var v in dict)
+                {
+                    Console.WriteLine(v.Key + " " + v.Value);
+                }
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Data doesn't exists");
+            }
+            //taxreturn.Open()
+            /*      
+            string middlewareFile = @"C:\middleware.txt";
             Console.Write("Enter the data location : ");
             string dataFile = Console.ReadLine();
             fileMiddleware middleware = new fileMiddleware(middlewareFile);
             middleware.addNewData(middlewareFile);
-            middleware.push();*/
+            middleware.push();
+             */
         }
     }
 }
