@@ -26,7 +26,7 @@ namespace EmptyAddin
         }
         string fileName;
         string filePath;
-        //FieldComparer aComparer;
+        FieldComparer aComparer;
         Boolean ComparerInit = false;
         private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
@@ -83,7 +83,7 @@ namespace EmptyAddin
         private void DoCommit()
         {
             var app = (IAppTaxApplicationService)_appInstance;
-            app.ShowMessageString(this.filePath, this.fileName);
+            aComparer.commit();
         }
 
         private void DoPush()
@@ -91,13 +91,13 @@ namespace EmptyAddin
             if (this.filePath != "")
             {
                 /*We can push*/
-                //aComparer.push(/*Data*/);
+                aComparer.Push();
             }
         }
 
         private void Update()
         {
-
+            aComparer.Update();
         }
 
         private void Checkout()
@@ -108,7 +108,8 @@ namespace EmptyAddin
         private void Branch()
         {
             var app = (IAppTaxApplicationService)_appInstance;
-            app.ShowMessageString("Which Branch?", "Branch Name");
+            app.ShowMessageString("Which Branch?", "BranchName");
+            aComparer.Branch("BranchName");
         }
 
         private void aboutUs() 
@@ -134,7 +135,7 @@ namespace EmptyAddin
         {
             if (!ComparerInit) 
             {
-                //aComparer = new VikingFS.FieldComparer(comFilePath, middlewareFilePath, this.filePath, this.fileName);
+                aComparer = new VikingFS.FieldComparer(this.filePath + @"\" + this.fileName, @"C:\Middleware.txt", this.filePath, "Backup");
                 ComparerInit = true;
             }
             

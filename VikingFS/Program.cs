@@ -50,7 +50,7 @@ namespace VikingFS
             //fileMiddleware middleware = new fileMiddleware(middlewareFile);
             string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
 
-            if (!taxreturn.Open(dataFile))
+            /*if (!taxreturn.Open(dataFile))
                 Console.Write("Yo bitch, something went wrong!");
 
             var dict = ModifiedList(taxreturn);
@@ -58,7 +58,7 @@ namespace VikingFS
             {
                 Console.WriteLine(v.Key + " " + v.Value);
             }
-            Console.ReadKey();
+            Console.ReadKey();*/
             
             
             //taxreturn.Open()
