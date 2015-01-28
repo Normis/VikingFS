@@ -9,7 +9,7 @@ namespace VikingFS
     class IncrementalFileSystem
     {
         public string FolderPath {get; private set;}
-        private string FileName {get; private set;}
+        public string FileName {get; private set;}
 
         private const string extension = ".incb";
         private StringBuilder modifs;//Could/should be change with file access
@@ -95,23 +95,5 @@ namespace VikingFS
                 return dict;
             }
         }
-
-        public TaxprepT2Com2014V2.Taxprep2014T2Return Update(long revision = -1)
-        {
-            return Checkout(FileName, revision);
-        }
-
-        public TaxprepT2Com2014V2.Taxprep2014T2Return Checkout(string branch, long revision = -1)
-        {
-            TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
-
-            foreach (var v in new IncrementalFileSystem(FolderPath, branch).GetValues(revision))
-                taxreturn.SetCellValue(v.Key, v.Value);  //erh what if not string?
-
-            return taxreturn;
-        }
-
-        
-
     }
 }
