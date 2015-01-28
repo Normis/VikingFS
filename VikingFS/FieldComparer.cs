@@ -10,21 +10,18 @@ namespace VikingFS
     {
         Dictionary<string, string> comFile;
         Dictionary<string, string> incrFile;
-        string comFilePath, incrFilePath,
-               comFileName, incrFileName;
-        public FieldComparer(string comFilePath, string comFileName, string incrFilePath, string incrFileName)
+        fileMiddleware fm;
+        IncrementalFileSystem currentIFS;
+        public FieldComparer(string comFilePath, string middlewareFilePath, string ifsFolderPath, string ifsFileName)
         {
-            this.comFilePath = comFilePath;
-            this.comFileName = comFileName;
-            this.incrFilePath = incrFilePath;
-            this.incrFileName = incrFileName;
-
+            fm = new fileMiddleware(middlewareFilePath);
+            currentIFS = new IncrementalFileSystem(ifsFolderPath, ifsFileName);
+            fm.addNewFile(currentIFS.GetPath(), currentIFS.GetFullPath());
         }
 
         public void commit(long revision = -1)
         {
-            IncrementalFileSystem ifs = new IncrementalFileSystem(incrFilePath,incrFileName);
-            incrFile = ifs.GetValues(revision);
+            incrFile = currentIFS.GetValues(revision);
             Dictionary<string, string> result = comFile.Keys.Intersect(incrFile.Keys).ToDictionary(t => t,t => comFile[t]);
             Dictionary<string, string> result1 = incrFile.Keys.Intersect(comFile.Keys).ToDictionary(t => t, t => incrFile[t]);
             foreach(KeyValuePair<string,string> pair in incrFile)
@@ -38,5 +35,10 @@ namespace VikingFS
             //..
         }
 
+        public void Branch(string branchName)
+        {
+            currentIFS = new IncrementalFileSystem(currentIFS.FolderPath, branchName, currentIFS.GetPath());
+            fm.addNewFile(currentIFS.GetPath(), currentIFS.GetFullPath());
+        }
     }
 }
