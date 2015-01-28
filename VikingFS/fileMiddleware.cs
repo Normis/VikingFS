@@ -22,12 +22,15 @@ namespace VikingFS
         {
             /*Lookup if the data already exists*/
             Boolean dataExists = false;
-            foreach (string line in System.IO.File.ReadLines(filePath))
+            if (System.IO.File.Exists(data))
             {
-                if (line.Contains(data))
+                foreach (string line in System.IO.File.ReadLines(filePath))
                 {
-                    dataExists = true;
-                    break;
+                    if (line.Contains(data))
+                    {
+                        dataExists = true;
+                        break;
+                    }
                 }
             }
             return dataExists;

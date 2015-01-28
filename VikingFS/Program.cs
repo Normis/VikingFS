@@ -47,15 +47,12 @@ namespace VikingFS
 
         static void Main(string[] args)
         {
-            Tests();
+           // Tests();
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
             string middlewareFile = @"C:\middleware.txt";
             fileMiddleware middleware = new fileMiddleware(middlewareFile);
             string dataFile = @"C:\Users\Utilisateur\Desktop\bbb.214";
-            /*Remove the next line once plugin works*/
-            middleware.addNewData(dataFile); middleware.push();
-            if(middleware.dataExists(dataFile))
-            {
+            
                 if(!taxreturn.Open(dataFile))
                     Console.Write("Yo bitch, something went wrong!");
 
@@ -65,11 +62,8 @@ namespace VikingFS
                     Console.WriteLine(v.Key + " " + v.Value);
                 }
                 Console.ReadKey();
-            }
-            else
-            {
-                Console.WriteLine("Data doesn't exists");
-            }
+            
+            
             //taxreturn.Open()
             /*      
             string middlewareFile = @"C:\middleware.txt";

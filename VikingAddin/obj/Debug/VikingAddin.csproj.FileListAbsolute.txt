@@ -3,3 +3,8 @@ D:\Work\VickingFS\VikingAddin\bin\Debug\EmptyAddin.pdb
 D:\Work\VickingFS\VikingAddin\obj\Debug\EmptyAddin.dll
 D:\Work\VickingFS\VikingAddin\obj\Debug\EmptyAddin.pdb
 D:\Work\VickingFS\VikingAddin\obj\Debug\VikingAddin.csprojResolveAssemblyReference.cache
+C:\Users\admin\Source\Repos\VickingFS\VikingAddin\obj\Debug\VikingAddin.csprojResolveAssemblyReference.cache
+C:\Users\admin\Source\Repos\VickingFS\VikingAddin\bin\Debug\EmptyAddin.dll
+C:\Users\admin\Source\Repos\VickingFS\VikingAddin\bin\Debug\EmptyAddin.pdb
+C:\Users\admin\Source\Repos\VickingFS\VikingAddin\obj\Debug\EmptyAddin.dll
+C:\Users\admin\Source\Repos\VickingFS\VikingAddin\obj\Debug\EmptyAddin.pdb
