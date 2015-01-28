@@ -13,18 +13,33 @@ namespace VikingFS
 
         private const string extension = ".incb";
         private StringBuilder modifs;//Could/should be change with file access
-        public IncrementalFileSystem(string _folderPath, string _fileName)
+        public IncrementalFileSystem(string _folderPath, string _fileName, string previousBranch = "", long previousRevision = -1)
         {
             this.FolderPath = _folderPath;
             this.FileName = _fileName;
-            if (!System.IO.File.Exists(GetFile()))
-                System.IO.File.WriteAllLines(GetFile(), new string[] { "0" });
+            if (!System.IO.File.Exists(GetFullPath()))
+            {
+                if(previousBranch == "")
+                    System.IO.File.WriteAllLines(GetFullPath(), new string[] { "0" });
+                else
+                {
+                    if(previousRevision == -1)
+                        previousRevision = Convert.ToInt64(System.IO.File.ReadLines(GetFullPath()).Last());//can't branch at 0, anyway, what kind of dumbass would do that?
+                    System.IO.File.WriteAllLines(GetFullPath(), new string[] { "0<-" + FileName + "<-" + previousRevision });
+                }
+            }
+                
             modifs = new StringBuilder();
         }
 
-        private string GetFile()
+        public string GetFullPath()
         {
             return FolderPath + "\\" + FileName + extension;
+        }
+
+        public string GetPath()
+        {
+            return FileName + extension;
         }
 
         public void Commit(string s)
@@ -39,8 +54,8 @@ namespace VikingFS
 
         public void Push()
         {
-            long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last().Split(new string[]{ "<-" }, StringSplitOptions.RemoveEmptyEntries)[0]);
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(GetFile(), true))
+            long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFullPath()).Last().Split(new string[]{ "<-" }, StringSplitOptions.RemoveEmptyEntries)[0]);
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(GetFullPath(), true))
             {
                 file.Write(modifs.ToString());
                 modifs.Clear();
@@ -50,7 +65,7 @@ namespace VikingFS
 
         public Dictionary<string, string> GetValues(long revision = -1 )
         {
-            using (System.IO.StreamReader file = new System.IO.StreamReader(GetFile()))
+            using (System.IO.StreamReader file = new System.IO.StreamReader(GetFullPath()))
             {
                 string first = file.ReadLine();//did not check if empty, I should have
                 string[] s = first.Split(new string[] { "<-" }, StringSplitOptions.RemoveEmptyEntries);
@@ -96,15 +111,7 @@ namespace VikingFS
             return taxreturn;
         }
 
-        public IncrementalFileSystem Branch(string branchName)
-        {
-            //Replace with something else later, ain't nobody got time for that!
-            //System.Diagnostics.Debug.Assert(!System.IO.File.Exists(folderPath + "\\" + branchName + extension));
-            long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last());//can't branch at 0, anyway, what kind of dumbass would do that?
-
-            System.IO.File.WriteAllLines(FolderPath + "\\" + branchName + extension, new string[] { "0<-" + FileName + "<-" + lastLine });
-            return new IncrementalFileSystem(FolderPath, branchName);
-        }
+        
 
     }
 }

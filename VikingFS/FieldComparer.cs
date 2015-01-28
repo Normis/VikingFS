@@ -10,20 +10,25 @@ namespace VikingFS
     {
         Dictionary<string, string> comFile;
         Dictionary<string, string> incrFile;
-        string comFilePath, incrFilePath;
-        public FieldComparer(string comFilePath, string incrFilePath)
+        fileMiddleware fm;
+        IncrementalFileSystem currentIFS;
+        public FieldComparer(string comFilePath, string middlewareFilePath, string ifsFolderPath, string ifsFileName)
         {
-            this.comFilePath = comFilePath;
-            this.incrFilePath = incrFilePath;
-
+            fm = new fileMiddleware(middlewareFilePath);
+            currentIFS = new IncrementalFileSystem(ifsFolderPath, ifsFileName);
+            fm.addNewFile(currentIFS.GetPath(), currentIFS.GetFullPath());
         }
 
         public void commit(Dictionary<string, string> repository)
         {
-            fileMiddleware fm = new fileMiddleware(incrFilePath);
             Dictionary<string, string> result = comFile.Keys.Intersect(incrFile.Keys).ToDictionary(t => t, comFile.Keys[t]);
             //..
         }
 
+        public void Branch(string branchName)
+        {
+            currentIFS = new IncrementalFileSystem(currentIFS.FolderPath, branchName, currentIFS.GetPath());
+            fm.addNewFile(currentIFS.GetPath(), currentIFS.GetFullPath());
+        }
     }
 }
