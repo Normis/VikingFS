@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FieldComparer.cs" />
     <Compile Include="FieldList.cs" />
     <Compile Include="fileMiddleware.cs" />
     <Compile Include="IncrementalFileSystem.cs" />
@@ -51,15 +52,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="TaxprepT1Com2014">
-      <Guid>{6E73B8F3-0618-475A-B10A-8D2267670FC3}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="TaxprepT2Com2014V2">
       <Guid>{92593293-8CAA-46C6-BA2B-2FD2A623FD16}</Guid>
       <VersionMajor>1</VersionMajor>
