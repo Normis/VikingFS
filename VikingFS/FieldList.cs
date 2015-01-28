@@ -8,7 +8,7 @@ namespace VikingFS
 {
     class FieldList
     {
-        string[] fields = { "IDENT.Ident4",
+        public static string[] fields = { "IDENT.Ident4",
                             "IDENT.Ident1",
                             "FILESTAT.PARTNERName",
                             "FILESTAT.PREPARERName",

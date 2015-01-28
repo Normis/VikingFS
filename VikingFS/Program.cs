@@ -26,10 +26,34 @@ namespace VikingFS
             Console.ReadKey();
         }
 
+        static Dictionary<string, string> ModifiedList(TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn)
+        {
+            var lst = new Dictionary<string,string>();
+
+            foreach(var v in FieldList.fields)
+            {
+                var cell = taxreturn.GetCell(v);
+                if(cell.HasInput)
+                    lst[v] = cell.Value.ToString();
+            }
+
+            return lst;
+        }
+
         static void Main(string[] args)
         {
-            Tests();
+            //Tests();
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
+            
+            if(!taxreturn.Open(@"C:\Users\Utilisateur\Desktop\bbb.214"))
+                Console.Write("Yo bitch, something went wrong!");
+
+            var dict = ModifiedList(taxreturn);
+            foreach(var v in dict)
+            {
+                Console.WriteLine(v.Key + " " + v.Value);
+            }
+            Console.ReadKey();
             //taxreturn.Open()
         }
     }
