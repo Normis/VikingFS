@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VikingFS
 {
-    class FieldComparer
+    public class FieldComparer
     {
         fileMiddleware fm;
         IncrementalFileSystem currentIFS;
@@ -77,6 +77,11 @@ namespace VikingFS
         {
             ClearEverything(currentIFS.GetFullPath());
             Checkout(currentIFS.FileName, revision);
+        }
+
+        public void Revert()
+        {
+
         }
 
         public void Push()
