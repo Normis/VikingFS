@@ -25,6 +25,9 @@ namespace EmptyAddin
             //some class initizalition code
         }
         string fileName;
+        string filePath;
+        FieldComparer aComparer;
+        Boolean ComparerInit = false;
         private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
         {
@@ -36,6 +39,10 @@ namespace EmptyAddin
                (aFilename) =>
                {
                    fileName = aFilename;
+                   int id = fileName.LastIndexOf(@"\");
+                   filePath = fileName.Substring(0,id+1);
+                   fileName = fileName.Substring(id + 1);
+                   initComparer();
                    DoCommit();
                });
             /**/
@@ -75,7 +82,8 @@ namespace EmptyAddin
 
         private void DoCommit()
         {
-            string test = this.fileName;
+            var app = (IAppTaxApplicationService)_appInstance;
+            app.ShowMessageString(this.filePath, this.fileName);
             pushItem.Enabled = true;
         }
 
@@ -96,7 +104,7 @@ namespace EmptyAddin
 
         private void Branch()
         {
-
+            
         }
 
         private void aboutUs() 
@@ -107,6 +115,15 @@ namespace EmptyAddin
             app.ShowMessageString("Viking!", asciiViking);
         }
 
+        private void initComparer() 
+        {
+            if (!ComparerInit) 
+            {
+                aComparer = new VikingFS.FieldComparer(comFilePath, middlewareFilePath, this.filePath, this.fileName);
+                ComparerInit = true;
+            }
+            
+        }
         public IAppClientFileEventsService FEvents { get; set; }
     }
 }
