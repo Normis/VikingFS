@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VikingFS
 {
-    class IncrementalFileSystem
+    public class IncrementalFileSystem
     {
         private string folderPath;
         private string fileName;

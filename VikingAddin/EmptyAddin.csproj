@@ -74,6 +74,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VikingFS\VikingFS.csproj">
+      <Project>{f2509148-42a8-4a79-835f-a342c6069b6a}</Project>
+      <Name>VikingFS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cmd /c copy /y "$(ProjectDir)api\ProxyAddin\1.0.0.0\*.*" "$(TargetDir)"

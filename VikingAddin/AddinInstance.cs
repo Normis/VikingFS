@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaxprepAddinAPI;
 using TxpAddinLibrary;
+using VikingFS;
 
 namespace EmptyAddin
 {
@@ -24,6 +25,7 @@ namespace EmptyAddin
             //some class initizalition code
         }
 
+        private IAppMenuItem pushItem;
         public override void InitializeTaxPrepAddin()
         {
             var appMenuService = (IAppMenuService)_appInstance;
@@ -31,18 +33,44 @@ namespace EmptyAddin
             {
                 var subMenu = appMenuService.AddRootMenu("Empty add-in");
                 subMenu.Visible = true;
+                
+                var commitItem = subMenu.AddItem("Commit", false);
+                commitItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoCommit);
+                commitItem.Visible = true;
+                commitItem.Enabled = true;
 
-                var item = subMenu.AddItem("Hello world", false);
-                item.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoHelloWorld);
-                item.Visible = true;
-                item.Enabled = true;
+                pushItem = subMenu.AddItem("Push", false);
+                pushItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoPush);
+                pushItem.Visible = true;
+                pushItem.Enabled = false;
+
+                var ifs = new VikingFS.IncrementalFileSystem("asd", "asd");
             }
         }
 
-        private void DoHelloWorld()
+        private void DoCommit()
         {
-            var app = (IAppTaxApplicationService)_appInstance;
-            app.ShowMessageString("Test message", "Hello world!");
+            pushItem.Enabled = true;
+        }
+
+        private void DoPush()
+        {
+            pushItem.Enabled = false;
+        }
+
+        private void Update()
+        {
+
+        }
+
+        private void Checkout()
+        {
+
+        }
+
+        private void Branch()
+        {
+
         }
     }
 }
