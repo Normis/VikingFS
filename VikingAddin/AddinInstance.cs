@@ -43,8 +43,6 @@ namespace EmptyAddin
                 pushItem.ClickHandler = new TxpAddinLibrary.Handlers.AppNotifyHandler(DoPush);
                 pushItem.Visible = true;
                 pushItem.Enabled = false;
-
-                var ifs = new VikingFS.IncrementalFileSystem("asd", "asd");
             }
         }
 
