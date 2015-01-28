@@ -8,8 +8,6 @@ namespace VikingFS
 {
     class FieldComparer
     {
-        Dictionary<string, string> comFile;
-        Dictionary<string, string> incrFile;
         fileMiddleware fm;
         IncrementalFileSystem currentIFS;
         TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn;
@@ -31,10 +29,19 @@ namespace VikingFS
             taxreturn.SaveAs(file);
         }
 
-        public void commit(Dictionary<string, string> repository)
+        public void commit()
         {
-            //Dictionary<string, string> result = comFile.Keys.Intersect(incrFile.Keys).ToDictionary(t => t, comFile.Keys[t]);
-            //..
+            Dictionary<string, string> fromCOM = ModifiedList();
+            Dictionary<string, string> fromText = currentIFS.GetValues();
+
+            var intersect = fromCOM.Keys.Intersect(fromText.Keys);// override values if change
+
+            foreach (var key in fromCOM.Keys.Union(fromText.Keys).Except(intersect))
+                this.currentIFS.Commit(key, fromCOM[key]);
+            
+            foreach (var key in intersect)
+                if(fromCOM[key] != fromText[key])
+                    this.currentIFS.Commit(key, fromCOM[key]);
         }
 
         public void Branch(string branchName)
@@ -57,7 +64,6 @@ namespace VikingFS
             }
             return lst;
         }
-
         
         public void Checkout(string branchName, long revision = -1)
         {
@@ -66,10 +72,16 @@ namespace VikingFS
             foreach (var v in new IncrementalFileSystem(currentIFS.FolderPath, branchName).GetValues(revision))
                 taxreturn.SetCellValue(v.Key, v.Value);  //erh what if not string?
         }
-        /*
-        public TaxprepT2Com2014V2.Taxprep2014T2Return Update(long revision = -1)
+        
+        public void Update(long revision = -1)
         {
-            return Checkout(FileName, revision);
-        }*/
+            ClearEverything(currentIFS.GetFullPath());
+            Checkout(currentIFS.FileName, revision);
+        }
+
+        public void Push()
+        {
+            this.currentIFS.Push();
+        }
     }
 }
