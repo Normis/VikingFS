@@ -130,7 +130,7 @@ namespace EmptyAddin
         {
             if (!ComparerInit) 
             {
-                aComparer = new VikingFS.FieldComparer(comFilePath, middlewareFilePath, this.filePath, this.fileName);
+                //aComparer = new VikingFS.FieldComparer(comFilePath, middlewareFilePath, this.filePath, this.fileName);
                 ComparerInit = true;
             }
             
