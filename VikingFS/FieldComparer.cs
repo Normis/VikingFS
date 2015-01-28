@@ -19,9 +19,19 @@ namespace VikingFS
             fm.addNewFile(currentIFS.GetPath(), currentIFS.GetFullPath());
         }
 
-        public void commit(Dictionary<string, string> repository)
+        public void commit(long revision = -1)
         {
-            Dictionary<string, string> result = comFile.Keys.Intersect(incrFile.Keys).ToDictionary(t => t, comFile.Keys[t]);
+            incrFile = currentIFS.GetValues(revision);
+            Dictionary<string, string> result = comFile.Keys.Intersect(incrFile.Keys).ToDictionary(t => t,t => comFile[t]);
+            Dictionary<string, string> result1 = incrFile.Keys.Intersect(comFile.Keys).ToDictionary(t => t, t => incrFile[t]);
+            foreach(KeyValuePair<string,string> pair in incrFile)
+            {
+                string value = comFile[pair.Key];
+                if(comFile[pair.Key] != null)
+                {
+
+                }
+            }
             //..
         }
 
