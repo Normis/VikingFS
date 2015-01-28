@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 
 namespace VikingFS
 {
-    public class IncrementalFileSystem
+    class IncrementalFileSystem
     {
-        private string folderPath;
-        private string fileName;
+        public string FolderPath {get; private set;}
+        private string FileName {get; private set;}
+
         private const string extension = ".incb";
         private StringBuilder modifs;//Could/should be change with file access
         public IncrementalFileSystem(string _folderPath, string _fileName)
         {
-            if (!System.IO.File.Exists(_folderPath + "\\" + _fileName + extension))
-                System.IO.File.WriteAllLines(_folderPath + "\\" + _fileName + extension, new string[] { "0" });
-            this.folderPath = _folderPath;
-            this.fileName = _fileName;
+            this.FolderPath = _folderPath;
+            this.FileName = _fileName;
+            if (!System.IO.File.Exists(GetFile()))
+                System.IO.File.WriteAllLines(GetFile(), new string[] { "0" });
             modifs = new StringBuilder();
         }
 
         private string GetFile()
         {
-            return folderPath + "\\" + fileName + extension;
+            return FolderPath + "\\" + FileName + extension;
         }
 
         public void Commit(string s)
@@ -54,7 +55,7 @@ namespace VikingFS
                 string first = file.ReadLine();//did not check if empty, I should have
                 string[] s = first.Split(new string[] { "<-" }, StringSplitOptions.RemoveEmptyEntries);
                 Dictionary<string, string> dict = (s.Length > 1)
-                            ? (new IncrementalFileSystem(folderPath, s[1])).GetValues(Convert.ToInt64(s[2]))
+                            ? (new IncrementalFileSystem(FolderPath, s[1])).GetValues(Convert.ToInt64(s[2]))
                             : new Dictionary<string, string>();
 
                 while (true)
@@ -82,14 +83,14 @@ namespace VikingFS
 
         public TaxprepT2Com2014V2.Taxprep2014T2Return Update(long revision = -1)
         {
-            return Checkout(fileName, revision);
+            return Checkout(FileName, revision);
         }
 
         public TaxprepT2Com2014V2.Taxprep2014T2Return Checkout(string branch, long revision = -1)
         {
             TaxprepT2Com2014V2.Taxprep2014T2Return taxreturn = new TaxprepT2Com2014V2.Taxprep2014T2Return();
 
-            foreach (var v in new IncrementalFileSystem(folderPath, branch).GetValues(revision))
+            foreach (var v in new IncrementalFileSystem(FolderPath, branch).GetValues(revision))
                 taxreturn.SetCellValue(v.Key, v.Value);  //erh what if not string?
 
             return taxreturn;
@@ -101,8 +102,8 @@ namespace VikingFS
             //System.Diagnostics.Debug.Assert(!System.IO.File.Exists(folderPath + "\\" + branchName + extension));
             long lastLine = Convert.ToInt64(System.IO.File.ReadLines(GetFile()).Last());//can't branch at 0, anyway, what kind of dumbass would do that?
 
-            System.IO.File.WriteAllLines(folderPath + "\\" + branchName + extension, new string[] { "0<-" + fileName + "<-" + lastLine });
-            return new IncrementalFileSystem(folderPath, branchName);
+            System.IO.File.WriteAllLines(FolderPath + "\\" + branchName + extension, new string[] { "0<-" + FileName + "<-" + lastLine });
+            return new IncrementalFileSystem(FolderPath, branchName);
         }
 
     }
